@@ -2,74 +2,88 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Tokens de tema (claro/escuro) */
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 224 71% 4%;
+    --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
-    --card-foreground: 224 71% 4%;
+    --card-foreground: 222.2 84% 4.9%;
 
-    --primary: 214 100% 36%; /* #0057B8 aprox */
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    --radius: 0.75rem;
+
+    /* Paleta */
+    --primary: 206 100% 31%; /* #005F9E */
     --primary-foreground: 210 40% 98%;
+    --secondary: 218 11% 65%;
+    --secondary-foreground: 222 83% 5%;
+    --accent: 222.2 47.4% 11.2%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
 
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 222 47% 11%;
-
-    --muted: 220 14% 96%;
-    --muted-foreground: 215 16% 47%;
-
-    --accent: 220 14% 96%;
-    --accent-foreground: 222 47% 11%;
-
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 214 100% 36%;
-
-    --radius: 0.5rem;
+    /* Seleção */
+    --selection-bg: 206 100% 31% / 0.2;
+    --selection-fg: 206 100% 31%;
   }
+
   .dark {
-    --background: 222 47% 11%;
+    --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
 
-    --card: 222 47% 13%;
+    --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
 
-    --primary: 214 100% 56%;
-    --primary-foreground: 222 47% 11%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
 
-    --secondary: 217 32% 17%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 206 100% 31%;
+
+    --primary: 206 100% 31%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
-
-    --muted: 217 32% 20%;
-    --muted-foreground: 215 20% 65%;
-
-    --accent: 217 32% 20%;
+    --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
 
-    --border: 217 32% 24%;
-    --input: 217 32% 24%;
-    --ring: 214 100% 56%;
+    --selection-bg: 206 100% 31% / 0.3;
+    --selection-fg: 210 40% 98%;
   }
 
-  html { scroll-behavior: smooth; }
+  * { @apply border-border; }
+  body { @apply bg-background text-foreground; }
 
-  /* Evita CssSyntaxError de @apply com cores custom */
-  body {
-    background-color: hsl(var(--background));
-    color: hsl(var(--foreground));
+  ::selection {
+    background-color: hsl(var(--selection-bg));
+    color: hsl(var(--selection-fg));
   }
 }
 
-/* ::selection sem usar @apply */
-::selection {
-  background: color-mix(in oklab, #0057B8 20%, transparent);
-  color: #0057B8;
+/* Skeleton/blur-up para imagens */
+.img-wrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  background: hsl(var(--muted));
 }
-
-@layer utilities {
-  .container-padded {
-    @apply mx-auto max-w-7xl px-4 md:px-6;
-  }
+.img-wrap.loading::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    hsl(var(--muted-foreground) / 0.15),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
 }

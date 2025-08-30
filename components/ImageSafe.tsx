@@ -4,33 +4,30 @@ import Image, { ImageProps } from "next/image";
 import { useState } from "react";
 
 type Props = Omit<ImageProps, "src" | "alt"> & {
-  src?: string | null;
+  src?: string;
   alt?: string;
   fallbackSrc?: string;
-  altFallback?: string;
-  className?: string;
 };
 
 export default function ImageSafe({
   src,
-  alt,
-  fallbackSrc = "/placeholder.svg",
-  altFallback = "Imagem não disponível",
-  className,
+  alt = "",
+  fallbackSrc = "/polus-logo.svg",
   ...rest
 }: Props) {
-  const [err, setErr] = useState(false);
+  const [error, setError] = useState(false);
+  const actual = !src || error ? fallbackSrc : src;
 
-  const finalSrc =
-    !src || src.trim() === "" || err ? fallbackSrc : (src as string);
+  // se por algum motivo ainda estiver vazio, não renderiza
+  if (!actual) return null;
 
   return (
     <Image
-      src={finalSrc}
-      alt={alt ?? altFallback}
-      className={className}
-      onError={() => setErr(true)}
       {...rest}
+      src={actual}
+      alt={alt}
+      onError={() => setError(true)}
+      sizes={rest.sizes ?? "(min-width:768px) 33vw, 100vw"}
     />
   );
 }

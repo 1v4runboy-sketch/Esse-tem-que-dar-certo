@@ -1,95 +1,71 @@
 // lib/reviews.ts
 export type Review = {
-  id: string;
   name: string;
   text: string;
-  rating: number;            // 1..5
-  avatar?: string | null;    // caminho em /public (ex.: "/reviews/dos-anjos.jpg")
+  avatar?: string; // caminho em /public/reviews/...
+  rating?: number; // 1..5
 };
 
-// Ordem fixa igual você pediu.
-// Se quiser usar fotos reais, coloque-as em /public/reviews/ com esses nomes.
-// Se a imagem não existir, o componente faz fallback (não quebra).
-export const REVIEWS: Review[] = [
+const REVIEWS: Review[] = [
   {
-    id: "dos-anjos",
     name: "Dos Anjos",
-    text:
-      "Atendimento maravilhoso e ágil, preços justos e com diversidades de produtos. Sou cliente a muitos anos, e super recomendo",
-    rating: 5,
+    text: "Atendimento maravilhoso e ágil, preços justos e com diversidades de produtos. Sou cliente a muitos anos, e super recomendo",
     avatar: "/reviews/dos-anjos.jpg",
+    rating: 5,
   },
   {
-    id: "rafael-r-dos-santos",
     name: "Rafael R. dos Santos",
-    text:
-      "Ótima Empresa. Atendimento rápido, boa organização dos produtos. Nota 10 para atendente Fernanda. Recomendo a Todos.",
-    rating: 5,
+    text: "Ótima Empresa\nAtendimento rápido, boa organização dos produtos.\nNota 10 para atendente Fernanda.\nRecomendo a Todos.",
     avatar: "/reviews/rafael-r-dos-santos.jpg",
+    rating: 5,
   },
   {
-    id: "sandro-backschat",
     name: "Sandro Backschat",
-    text:
-      "Ótimo atendimento, empresa cumpre o que promete! Fernanda me explicou certinho sobre as peças, muito gente boa! Recomendo!!!!",
-    rating: 5,
+    text: "Ótimo atendimento, empresa cumpre o que promete !\nFernanda me explicou certinho sobre as peças, muito gente boa !\nRecomendo !!!!",
     avatar: "/reviews/sandro-backschat.jpg",
+    rating: 5,
   },
   {
-    id: "meire-polezi",
     name: "Meire Polezi",
-    text:
-      "Preço muito bom e atendimento nota 10. A atendente Fernanda me atendeu e esclareceu todas as minhas dúvidas. Parabéns",
-    rating: 5,
+    text: "Preço muito bom e atendimento nota 10.\nA atendente Fernanda me atendeu e esclareceu todas as minhas dúvidas. Parabéns",
     avatar: "/reviews/meire-polezi.jpg",
+    rating: 5,
   },
   {
-    id: "thalia-ariadna",
     name: "Thalia Ariadna",
-    text:
-      "Atendente Heitor super prestativo! Me explicou muito bem sobre as peças, ótimo comércio!",
-    rating: 5,
+    text: "Atendente Heitor super prestativo! Me explicou muito bem sobre as peças, ótimo comércio!",
     avatar: "/reviews/thalia-ariadna.jpg",
+    rating: 5,
   },
   {
-    id: "renata",
     name: "Renata _",
-    text:
-      "Avaliando principalmente pelo atendimento da Fernanda, sempre muito simpática e atenciosa com os clientes.",
-    rating: 5,
+    text: "Avaliando principalmente pelo atendimento da Fernanda, sempre muito simpática e atenciosa com os clientes.",
     avatar: "/reviews/renata.jpg",
+    rating: 5,
   },
   {
-    id: "james-lourenco-goncalves",
     name: "James Lourenço Gonçalves",
-    text:
-      "Ótimo atendimento e bons preços, super indico!!",
-    rating: 5,
+    text: "Ótimo atendimento e bons preços, super indico!!",
     avatar: "/reviews/james-lourenco-goncalves.jpg",
+    rating: 5,
   },
   {
-    id: "darah-mendes",
     name: "Darah Mendes",
-    text:
-      "Gostei muito das peças e o atendimento impecável da Fernanda 👏🏽",
-    rating: 5,
+    text: "gostei muito das peças e o atendimento impecavel da Fernanda 👏🏽 …",
     avatar: "/reviews/darah-mendes.jpg",
+    rating: 5,
   },
   {
-    id: "rodrigoyasmin-almeida",
     name: "Rodrigoyasmin Almeida",
-    text:
-      "Ótimo atendimento da Fernanda, super prestativa 👍",
-    rating: 5,
+    text: "Ótimo atendimento da Fernanda super prestativa 👍 …",
     avatar: "/reviews/rodrigoyasmin-almeida.jpg",
+    rating: 5,
   },
   {
-    id: "jorge-dos-santos",
     name: "Jorge dos Santos",
-    text:
-      "Excelente, empresa familiar, sabem o que estão fazendo",
-    rating: 5,
+    text: "Excelente, empresa familiar, sabem o que estão fazendo",
     avatar: "/reviews/jorge-dos-santos.jpg",
+    rating: 5,
   },
 ];
 

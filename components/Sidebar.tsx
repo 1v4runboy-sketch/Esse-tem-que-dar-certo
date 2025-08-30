@@ -1,65 +1,41 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import Image from "next/image";
+import { useState } from "react";
 import Link from "next/link";
 
-export default function Sidebar({
-  open,
-  onClose,
-}: {
-  open: boolean;
-  onClose: () => void;
-}) {
-  // Bloqueia scroll de fundo quando aberto
-  useEffect(() => {
-    if (open) document.body.style.overflow = "hidden";
-    else document.body.style.overflow = "";
-    return () => { document.body.style.overflow = ""; };
-  }, [open]);
+export default function Sidebar() {
+  const [open, setOpen] = useState(false);
 
   return (
     <>
-      {/* Overlay */}
-      <div
-        className={`fixed inset-0 z-40 bg-black/50 transition-opacity ${
-          open ? "opacity-100" : "pointer-events-none opacity-0"
-        }`}
-        onClick={onClose}
-        aria-hidden
-      />
+      <button
+        aria-label="Abrir menu"
+        onClick={() => setOpen((v) => !v)}
+        className="fixed left-4 top-4 z-50 rounded-full border bg-card p-2 shadow hover:shadow-md"
+      >
+        <Image src="/loading-logo.png" alt="Menu" width={32} height={32} />
+      </button>
 
-      {/* Drawer */}
       <aside
-        className={`fixed left-0 top-0 z-50 h-full w-[320px] transform border-r bg-background text-foreground shadow-xl transition-transform ${
+        className={`fixed z-40 top-0 left-0 h-full w-72 border-r bg-background transition-transform ${
           open ? "translate-x-0" : "-translate-x-full"
         }`}
-        role="dialog"
-        aria-label="Menu"
       >
-        <div className="flex items-center justify-between px-4 h-14 border-b">
+        <div className="p-4 flex items-center justify-between border-b">
           <span className="font-semibold">Menu</span>
           <button
-            onClick={onClose}
-            className="rounded-md border px-2 py-1 text-sm hover:bg-accent hover:text-accent-foreground"
             aria-label="Fechar menu"
+            onClick={() => setOpen(false)}
+            className="rounded-md border px-2 py-1 text-sm"
           >
             Fechar
           </button>
         </div>
-
         <nav className="p-4 space-y-2 text-sm">
-          <Link href="/" className="block rounded-md px-2 py-1.5 hover:bg-accent">
-            Início
-          </Link>
-          <Link href="/#produtos" className="block rounded-md px-2 py-1.5 hover:bg-accent">
-            Produtos
-          </Link>
-          <Link href="/#marcas" className="block rounded-md px-2 py-1.5 hover:bg-accent">
-            Marcas
-          </Link>
-          <Link href="/#contato" className="block rounded-md px-2 py-1.5 hover:bg-accent">
-            Contato
-          </Link>
+          <Link href="/" className="block hover:underline">Início</Link>
+          <Link href="/produtos" className="block hover:underline">Produtos</Link>
+          <Link href="/contato" className="block hover:underline">Contato</Link>
         </nav>
       </aside>
     </>

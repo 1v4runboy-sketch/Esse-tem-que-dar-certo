@@ -1,43 +1,51 @@
-import PRODUCTS from "../lib/products";
-import ProductCard from "../components/ProductCard";
-import ReviewsCarousel from "../components/ReviewsCarousel";
+import PRODUCTS from "@/lib/products";
+import ProductCard from "@/components/ProductCard";
+import ReviewsCarousel from "@/components/ReviewsCarousel";
 
 export default function Page() {
-  const featured = [
+  const vitrineSlugs = [
     "verniz-weg-1314-5l",
     "corpo-prefiltro-jacuzzi-a",
     "capacitor-permanente-250v",
     "filme-poliester",
     "resina-95b",
   ];
-
-  const items = featured
-    .map((id) => PRODUCTS.find((p) => p.id === id))
-    .filter(Boolean) as typeof PRODUCTS;
+  const vitrine = PRODUCTS.filter((p) => vitrineSlugs.includes(p.slug));
 
   return (
     <>
-      <section className="py-8">
-        <h1 className="text-2xl md:text-3xl font-semibold tracking-tight">
-          Polus Eletrotécnica — Catálogo Técnico
-        </h1>
-        <p className="mt-2 text-muted-foreground">
-          Peças para motores elétricos e bombas d’água. Consulte disponibilidade e prazo pelo WhatsApp.
-        </p>
+      {/* Hero com vídeo loop */}
+      <section className="relative rounded-lg overflow-hidden border">
+        <video
+          className="w-full h-[220px] object-cover"
+          src="/Loop-ezgif.com-video-to-webp-converter.webp"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent" />
+        <div className="absolute bottom-3 left-3">
+          <h1 className="text-xl font-semibold">Polus Eletrotécnica — Catálogo Técnico</h1>
+          <p className="text-sm text-muted-foreground">
+            Peças para motores elétricos e bombas d’água. Consulte no WhatsApp.
+          </p>
+        </div>
       </section>
 
-      <section id="produtos" className="py-6">
-        <h2 className="mb-4 text-xl font-semibold">Vitrine</h2>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {items.map((p) => (
+      {/* Vitrine */}
+      <section className="mt-8">
+        <h2 className="text-lg font-semibold mb-4">Destaques</h2>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          {vitrine.map((p) => (
             <ProductCard key={p.id} product={p} />
           ))}
         </div>
       </section>
 
-      <section className="py-8">
-        <ReviewsCarousel />
-      </section>
+      {/* Reviews */}
+      <ReviewsCarousel />
     </>
   );
 }

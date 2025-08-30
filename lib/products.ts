@@ -1,5 +1,4 @@
 // lib/products.ts
-// Estrutura minimal para produtos. Ajuste techSpecs conforme for necessário.
 export type ProductImage = { src: string; alt?: string };
 export type Product = {
   id: string;
