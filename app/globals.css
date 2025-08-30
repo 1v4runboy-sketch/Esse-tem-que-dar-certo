@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Tema: transição “espacial” sutil ao alternar claro/escuro */
+:root {
+  --bg-space: radial-gradient(1200px 800px at 20% -10%, rgba(0,102,166,0.12), transparent 60%),
+              radial-gradient(900px 600px at 120% 120%, rgba(0,102,166,0.10), transparent 65%);
+}
+html {
+  @apply scroll-smooth;
+}
+body {
+  background: var(--bg-space);
+}
+.dark body {
+  --bg-space:
+    radial-gradient(1200px 800px at 20% -10%, rgba(0,102,166,0.2), transparent 60%),
+    radial-gradient(900px 600px at 120% 120%, rgba(0,102,166,0.18), transparent 65%),
+    linear-gradient(#0a0a0a,#0b0e12);
+  color-scheme: dark;
+}
+* { @apply selection:bg-weg/20 selection:text-weg; }
+
+/* Skeleton e blur-up */
+.img-wrap { position: relative; }
+.img-skel { @apply absolute inset-0 bg-gray-200 dark:bg-neutral-800 animate-pulse rounded-md; }
+.img-loaded { @apply transition duration-500 ease-out; filter: blur(0); opacity: 1; }
+
+/* Scroll-snap pra carrosséis */
+.snap-x-mandatory { scroll-snap-type: x mandatory; }
+.snap-center { scroll-snap-align: center; }
+
+/* Acessibilidade: reduzir movimento */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
