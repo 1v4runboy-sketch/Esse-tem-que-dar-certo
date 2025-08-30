@@ -1,38 +1,57 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class',
   content: [
-    "./app/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./lib/**/*.{ts,tsx}",
-        "*.{js,ts,jsx,tsx,mdx}"
-    ],
+    "./app/**/*.{ts,tsx,js,jsx,mdx}",
+    "./components/**/*.{ts,tsx,js,jsx,mdx}",
+    "./lib/**/*.{ts,tsx,js,jsx,mdx}",
+    "./pages/**/*.{ts,tsx,js,jsx,mdx}",
+      "*.{js,ts,jsx,tsx,mdx}"
+],
   theme: {
     extend: {
       colors: {
-        weg: {
-          DEFAULT: "#0066A6" // azul WEG aprovado
-        }
-      },
-      keyframes: {
-        spinY: {
-          "0%": { transform: "rotateY(0deg)" },
-          "100%": { transform: "rotateY(360deg)" }
+        weg: { DEFAULT: "#0057B8" },
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
         },
-        pulseOnce: {
-          "0%": { transform: "scale(1)" },
-          "50%": { transform: "scale(1.06)" },
-          "100%": { transform: "scale(1)" }
-        }
-      },
-      animation: {
-        spinY: "spinY var(--spin-dur,6s) linear infinite",
-        pulseOnce: "pulseOnce 1s ease"
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
       },
       boxShadow: {
-        card: "0 6px 24px -8px rgba(0,0,0,0.25)"
-      }
-    }
+        card: "0 1px 2px 0 rgba(0,0,0,0.08), 0 1px 3px 1px rgba(0,0,0,0.06)",
+      },
+      keyframes: {
+        pulseSoft: {
+          "0%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.06)" },
+          "100%": { transform: "scale(1)" },
+        },
+      },
+      animation: {
+        pulseSoft: "pulseSoft 1s ease-in-out 1",
+      },
+    },
   },
-  darkMode: "class",
-  plugins: []
-}
+  plugins: [],
+};

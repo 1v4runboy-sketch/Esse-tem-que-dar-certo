@@ -1,31 +1,50 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
-import ThemeToggle from "./ThemeToggle";
-import Sidebar from "./Sidebar";
-import { SITE } from "@/lib/site";
+import { useState } from "react";
+import Sidebar from "@/components/Sidebar";
+import RotatingLogo from "@/components/RotatingLogo";
 
 export default function Header() {
+  const [open, setOpen] = useState(false);
+
   return (
-    <header className="sticky top-0 z-50 bg-white/70 dark:bg-black/30 backdrop-blur border-b border-black/[0.06] dark:border-white/10">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
-        <div className="flex items-center gap-3">
-          <Sidebar />
-          <Link href="/" className="flex items-center gap-2">
-            <Image src={SITE.headerLogo} alt="Polus" width={36} height={36} className="h-9 w-9" />
-            <span className="font-semibold hidden sm:inline">{SITE.name}</span>
-          </Link>
+    <>
+      <header className="sticky top-0 z-30 border-b bg-background/80 backdrop-blur">
+        <div className="container-padded h-14 grid grid-cols-3 items-center">
+          {/* Botão da sidebar (logo loader) à esquerda */}
+          <div className="flex items-center">
+            <button
+              onClick={() => setOpen((v) => !v)}
+              aria-label="Abrir menu"
+              className="rounded-md p-1.5 hover:bg-accent"
+              title="Menu"
+            >
+              <Image
+                src="/loading-logo.png"
+                alt="Menu"
+                width={28}
+                height={28}
+                className="h-7 w-7"
+                priority
+              />
+            </button>
+          </div>
+
+          {/* Logo rotatória central */}
+          <div className="flex items-center justify-center">
+            <RotatingLogo src="/polus-logo.svg" size={56} hoverSpeedUp={3} axis="z" />
+          </div>
+
+          {/* Espaço à direita para ações (Tema, etc.) */}
+          <div className="flex items-center justify-end gap-2">
+            {/* Coloque aqui o ModeToggle se quiser visível no header */}
+            {/* <ModeToggle /> */}
+          </div>
         </div>
+      </header>
 
-        <nav className="hidden md:flex items-center gap-6 text-sm">
-          <Link href="/produtos" className="hover:underline underline-offset-4">Produtos</Link>
-          <Link href="/marcas" className="hover:underline underline-offset-4">Marcas</Link>
-          <Link href="/contato" className="hover:underline underline-offset-4">Contato</Link>
-        </nav>
-
-        <ThemeToggle />
-      </div>
-    </header>
+      <Sidebar open={open} onClose={() => setOpen(false)} />
+    </>
   );
 }

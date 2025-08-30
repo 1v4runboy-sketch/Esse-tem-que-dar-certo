@@ -1,36 +1,51 @@
 import "./globals.css";
-import { Metadata } from "next";
-import { SITE } from "@/lib/site";
-import { ThemeProvider } from "@/components/ThemeProvider";
+import type { Metadata } from "next";
+import SITE from "@/lib/site";
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import WhatsAppFab from "@/components/WhatsAppFab";
+import ModeToggle from "@/components/ModeToggle";
+import WhatsFloating from "@/components/WhatsFloating";
 
 export const metadata: Metadata = {
   title: SITE.title,
   description: SITE.description,
-  icons: { icon: "/polus-logo.svg" },
-  openGraph: {
-    title: SITE.title,
-    description: SITE.description,
-    siteName: SITE.name,
-    type: "website"
+  icons: {
+    icon: "/polus-logo.svg", // pode trocar depois pelo favicon
   },
+  metadataBase: new URL("https://polus.example.com"), // ajuste quando tiver domínio
     generator: 'v0.app'
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
-      <body className="min-h-screen antialiased">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <Header />
-          <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
-            {children}
-          </main>
-          <Footer />
-          <WhatsAppFab />
-        </ThemeProvider>
+      <body>
+        {/* Header com logo rotatória e botão da sidebar */}
+        <Header />
+
+        {/* Botão global do tema (se não quiser aqui, remova) */}
+        <div className="container-padded mt-3 flex justify-end">
+          <ModeToggle />
+        </div>
+
+        {/* Se quiser o video/loop no topo da home como “hero” de fundo global: */}
+        <div className="absolute inset-0 -z-10 pointer-events-none opacity-20">
+          <img
+            src="/Loop-ezgif.com-video-to-webp-converter.webp"
+            alt=""
+            className="h-full w-full object-cover"
+            loading="eager"
+          />
+        </div>
+
+        {/* Conteúdo */}
+        <main className="container-padded py-6">{children}</main>
+
+        {/* Whats flutuante */}
+        <WhatsFloating />
       </body>
     </html>
   );
