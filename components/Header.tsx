@@ -1,50 +1,44 @@
-"use client";
-
-import Image from "next/image";
-import { useState } from "react";
-import Sidebar from "@/components/Sidebar";
-import RotatingLogo from "@/components/RotatingLogo";
+'use client';
+import Link from 'next/link';
+import { useState } from 'react';
+import RotatingLogoButton from './RotatingLogoButton';
+import ThemeToggle from './ThemeToggle';
+import Sidebar from './Sidebar';
 
 export default function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <>
-      <header className="sticky top-0 z-30 border-b bg-background/80 backdrop-blur">
-        <div className="container-padded h-14 grid grid-cols-3 items-center">
-          {/* Botão da sidebar (logo loader) à esquerda */}
-          <div className="flex items-center">
-            <button
-              onClick={() => setOpen((v) => !v)}
-              aria-label="Abrir menu"
-              className="rounded-md p-1.5 hover:bg-accent"
-              title="Menu"
-            >
-              <Image
-                src="/loading-logo.png"
-                alt="Menu"
-                width={28}
-                height={28}
-                className="h-7 w-7"
-                priority
-              />
-            </button>
-          </div>
+    <header className="sticky top-0 z-50 w-full border-b border-black/10 dark:border-white/10 bg-white/70 dark:bg-black/40 backdrop-blur">
+      <div className="mx-auto max-w-6xl px-4 h-14 flex items-center gap-3">
 
-          {/* Logo rotatória central */}
-          <div className="flex items-center justify-center">
-            <RotatingLogo src="/polus-logo.svg" size={56} hoverSpeedUp={3} axis="z" />
-          </div>
+        {/* Botão do menu (hambúrguer) */}
+        <button
+          onClick={() => setOpen(true)}
+          aria-label="Abrir menu"
+          className="p-2 rounded border border-black/10 dark:border-white/10 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+        >
+          {/* troque por um SVG se preferir */}
+          ☰
+        </button>
 
-          {/* Espaço à direita para ações (Tema, etc.) */}
-          <div className="flex items-center justify-end gap-2">
-            {/* Coloque aqui o ModeToggle se quiser visível no header */}
-            {/* <ModeToggle /> */}
-          </div>
+        {/* Logo SEM onClick — apenas decorativa/navegação */}
+        <Link href="/" className="flex items-center gap-2">
+          <RotatingLogoButton size={42} />
+          <span className="hidden sm:inline font-semibold tracking-tight">Polus</span>
+        </Link>
+
+        <div className="ml-auto flex items-center gap-3">
+          <ThemeToggle />
         </div>
-      </header>
+      </div>
 
-      <Sidebar open={open} onClose={() => setOpen(false)} />
-    </>
+      {/* A sua Sidebar existente — ajuste as props conforme o seu componente */}
+      {/* Variante A (frequente): onOpenChange */}
+      <Sidebar open={open} onOpenChange={setOpen} />
+      {/* Variante B (se a sua Sidebar usar onClose): 
+          <Sidebar open={open} onClose={() => setOpen(false)} /> 
+      */}
+    </header>
   );
 }

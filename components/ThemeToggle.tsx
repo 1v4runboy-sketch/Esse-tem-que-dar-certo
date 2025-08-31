@@ -6,7 +6,7 @@ export default function ThemeToggle() {
   const { theme, systemTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
-  if (!mounted) return null; // evita flash/hidratação
+  if (!mounted) return null;
 
   const current = theme === 'system' ? systemTheme : theme;
   const toggle = () => setTheme(current === 'dark' ? 'light' : 'dark');
