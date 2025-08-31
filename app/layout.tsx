@@ -1,25 +1,20 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import SITE from "@/lib/site";
-import SidebarProvider from "@/components/SidebarProvider";
-import TopBar from "@/components/TopBar";
-import Sidebar from "@/components/Sidebar";
+import './globals.css';
+import type { Metadata } from 'next';
+import { UIThemeProvider } from '@/components/ThemeProvider';
 
 export const metadata: Metadata = {
-  title: SITE.title,
-  description: SITE.description,
+  title: 'Polus Catálogo',
+  description: 'Catálogo de produtos Polus',
     generator: 'v0.app'
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR">
-      <body className="bg-black text-white">
-        <SidebarProvider>
-          <TopBar />
-          <Sidebar />
-          <main className="max-w-6xl mx-auto px-4 py-6">{children}</main>
-        </SidebarProvider>
+    <html lang="pt-BR" suppressHydrationWarning>
+      <body className="min-h-screen bg-white text-black dark:bg-black dark:text-white antialiased">
+        <UIThemeProvider>
+          {children}
+        </UIThemeProvider>
       </body>
     </html>
   );

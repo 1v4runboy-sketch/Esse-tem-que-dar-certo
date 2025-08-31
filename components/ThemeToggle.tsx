@@ -1,3 +1,4 @@
+// components/ThemeToggle.tsx
 'use client';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
@@ -9,7 +10,10 @@ export default function ThemeToggle() {
   if (!mounted) return null;
 
   const current = theme === 'system' ? systemTheme : theme;
-  const toggle = () => setTheme(current === 'dark' ? 'light' : 'dark');
+  const toggle = () => {
+    setTheme(current === 'dark' ? 'light' : 'dark');
+    try { window.dispatchEvent(new Event('themechange')); } catch {}
+  };
 
   return (
     <button
