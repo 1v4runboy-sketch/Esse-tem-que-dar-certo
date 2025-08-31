@@ -1,30 +1,40 @@
-// app/contato/page.tsx
-import Header from '@/components/Header';
+import { SITE } from "@/lib/site";
+import { isOpenNow } from "@/lib/utils";
 
 export default function ContatoPage() {
+  const { index } = isOpenNow();
+
   return (
-    <>
-      <Header />
-      <main className="mx-auto max-w-6xl px-4 py-8 space-y-6">
-        <h1 className="text-xl font-semibold">Contato</h1>
-        <div className="grid sm:grid-cols-2 gap-6">
-          <div className="space-y-2 text-sm">
-            <p><strong>Endereço:</strong> Rua Exemplo, 123 - Centro, Sua Cidade - UF</p>
-            <p><strong>Telefone:</strong> (00) 00000-0000</p>
-            <p><strong>Email:</strong> contato@polus.com.br</p>
-            <p><strong>Horário:</strong> Seg a Sex — 8h às 18h</p>
-          </div>
-          <div className="aspect-video overflow-hidden rounded-xl border border-black/10 dark:border-white/10">
-            <iframe
-              title="Mapa"
-              className="w-full h-full"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3675.166...">
-            </iframe>
-          </div>
+    <div className="grid lg:grid-cols-2 gap-8">
+      <section className="space-y-3">
+        <h1 className="text-2xl font-semibold">Contato</h1>
+        <p><span className="font-medium">{SITE.name}</span> — CNPJ {SITE.cnpj}</p>
+        <p><span className="font-medium">Endereço:</span> {SITE.address}</p>
+        <p><span className="font-medium">E‑mail:</span> <a className="underline underline-offset-4" href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+        <p><span className="font-medium">WhatsApp:</span> <a className="underline underline-offset-4 text-green-600" href={`https://wa.me/${SITE.whatsapp}`} target="_blank">+{SITE.whatsapp}</a></p>
+        <p><span className="font-medium">Instagram:</span> <a className="underline underline-offset-4" href={SITE.instagram} target="_blank" rel="noreferrer">_poluseletrotecnica</a></p>
+
+        <div className="pt-4">
+          <h2 className="text-lg font-semibold">Atendimento</h2>
+          <ul className="mt-2 space-y-1 text-sm">
+            {SITE.businessHours.map((d, i) => (
+              <li key={i} className={i === index ? "font-semibold text-weg" : ""}>
+                {d.day}: {d.open ? `${d.open}–${d.close}` : "Fechado"}
+              </li>
+            ))}
+          </ul>
         </div>
-      </main>
-    </>
+      </section>
+
+      <section className="rounded-xl overflow-hidden border">
+        <iframe
+          title="Localização no Google Maps"
+          src={SITE.mapsEmbedSrc}
+          className="w-full h-[420px]"
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+        />
+      </section>
+    </div>
   );
 }

@@ -1,48 +1,36 @@
-// components/ProductCard.tsx
+"use client";
+
+import Image from "next/image";
 import Link from "next/link";
-import ImageSafe from "./ImageSafe";
-import { Product } from "@/lib/products";
-import SITE from "@/lib/site";
+import { Product } from "@/lib/types";
+import { SITE } from "@/lib/site";
+import { waLink } from "@/lib/utils";
 
 export default function ProductCard({ product }: { product: Product }) {
-  const cover = product.images?.[0]?.src ?? null;
-  const whats = `https://wa.me/${SITE.whatsappNumberIntl}?text=${SITE.whatsappMessage(product.title)}`;
+  const href = `/produto/${product.slug}`;
+  const wa = waLink(SITE.whatsapp, SITE.whatsappMessage(product.title));
+  const img = product.images[0];
 
   return (
-    <div className="rounded-lg border bg-white text-black overflow-hidden flex flex-col">
-      <Link href={`/produtos/${product.slug}`} className="block">
-        <div className="relative w-full aspect-square bg-gray-100">
-          <ImageSafe
-            src={cover}
-            alt={product.title}
-            fill
-            className="object-contain"
-            fallbackClassName="w-full h-full bg-gray-100"
-          />
+    <div className="group rounded-xl border bg-white/80 dark:bg-white/[0.02] dark:border-white/10 overflow-hidden hover:shadow-card transition">
+      <Link href={href} className="block">
+        <div className="relative aspect-[4/3]">
+          {img && (
+            <Image src={img.src} alt={img.alt} fill sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw" className="object-cover transition-transform group-hover:scale-[1.02]" />
+          )}
         </div>
       </Link>
-
-      <div className="p-3 flex-1 flex flex-col gap-2">
-        <div className="text-xs uppercase tracking-wide opacity-70">{product.brand}</div>
-        <Link href={`/produtos/${product.slug}`} className="font-medium leading-tight hover:underline">
+      <div className="p-4 space-y-3">
+        <span className="inline-block text-xs font-semibold rounded-full bg-weg/10 text-weg px-3 py-1">{product.brand}</span>
+        <Link href={href} className="block text-base font-semibold leading-tight hover:underline underline-offset-4">
           {product.title}
         </Link>
-        {product.shortDescription && (
-          <p className="text-sm text-black/70 line-clamp-2">{product.shortDescription}</p>
-        )}
-
-        <div className="mt-auto pt-2 flex items-center gap-2">
-          <a
-            href={whats}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center justify-center h-9 px-3 rounded bg-green-500 text-white text-sm font-medium hover:bg-green-600"
-          >
+        <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2">{product.shortDescription}</p>
+        <div className="flex items-center gap-2">
+          <a href={wa} target="_blank" className="inline-flex items-center gap-2 rounded-md bg-green-500 text-white px-3 py-1.5 text-sm font-semibold hover:brightness-110">
             Consultar no WhatsApp
           </a>
-          <span className="ml-auto text-[11px] px-2 py-0.5 rounded bg-black/5">
-            {product.category ?? "—"}
-          </span>
+          <Link href={href} className="text-sm hover:underline underline-offset-4">Detalhes</Link>
         </div>
       </div>
     </div>

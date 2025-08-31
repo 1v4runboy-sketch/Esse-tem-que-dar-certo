@@ -1,27 +1,20 @@
-// components/ThemeToggle.tsx
-'use client';
-import { useTheme } from 'next-themes';
-import { useEffect, useState } from 'react';
+"use client";
+
+import { useTheme } from "next-themes";
 
 export default function ThemeToggle() {
-  const { theme, systemTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  if (!mounted) return null;
-
-  const current = theme === 'system' ? systemTheme : theme;
-  const toggle = () => {
-    setTheme(current === 'dark' ? 'light' : 'dark');
-    try { window.dispatchEvent(new Event('themechange')); } catch {}
-  };
+  const { theme, setTheme, systemTheme } = useTheme();
+  const active = theme === "system" ? systemTheme : theme;
+  const dark = active === "dark";
 
   return (
     <button
-      onClick={toggle}
-      aria-label="Mudar tema"
-      className="px-2 py-1 rounded border border-black/10 dark:border-white/10 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+      onClick={() => setTheme(dark ? "light" : "dark")}
+      className="inline-flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm hover:bg-gray-50 dark:hover:bg-white/10"
+      aria-label="Alternar tema"
+      title="Alternar tema"
     >
-      {current === 'dark' ? '🌙' : '☀️'}
+      {dark ? "🌙" : "☀️"} <span className="hidden sm:inline">{dark ? "Escuro" : "Claro"}</span>
     </button>
   );
 }

@@ -2,88 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
-    --radius: 0.75rem;
-
-    /* Paleta */
-    --primary: 206 100% 31%; /* #005F9E */
-    --primary-foreground: 210 40% 98%;
-    --secondary: 218 11% 65%;
-    --secondary-foreground: 222 83% 5%;
-    --accent: 222.2 47.4% 11.2%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
-
-    /* Seleção */
-    --selection-bg: 206 100% 31% / 0.2;
-    --selection-fg: 206 100% 31%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 206 100% 31%;
-
-    --primary: 206 100% 31%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --selection-bg: 206 100% 31% / 0.3;
-    --selection-fg: 210 40% 98%;
-  }
-
-  * { @apply border-border; }
-  body { @apply bg-background text-foreground; }
-
-  ::selection {
-    background-color: hsl(var(--selection-bg));
-    color: hsl(var(--selection-fg));
-  }
+/* Tema: transição “espacial” sutil ao alternar claro/escuro */
+:root {
+  --bg-space: radial-gradient(1200px 800px at 20% -10%, rgba(0,102,166,0.12), transparent 60%),
+              radial-gradient(900px 600px at 120% 120%, rgba(0,102,166,0.10), transparent 65%);
 }
-
-/* Skeleton/blur-up para imagens */
-.img-wrap {
-  position: relative;
-  overflow: hidden;
-  border-radius: 0.5rem;
-  background: hsl(var(--muted));
+html {
+  @apply scroll-smooth;
 }
-.img-wrap.loading::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    hsl(var(--muted-foreground) / 0.15),
-    transparent
-  );
-  background-size: 200% 100%;
-  animation: shimmer 1.2s infinite;
+body {
+  background: var(--bg-space);
+}
+.dark body {
+  --bg-space:
+    radial-gradient(1200px 800px at 20% -10%, rgba(0,102,166,0.2), transparent 60%),
+    radial-gradient(900px 600px at 120% 120%, rgba(0,102,166,0.18), transparent 65%),
+    linear-gradient(#0a0a0a,#0b0e12);
+  color-scheme: dark;
+}
+* { @apply selection:bg-weg/20 selection:text-weg; }
+
+/* Skeleton e blur-up */
+.img-wrap { position: relative; }
+.img-skel { @apply absolute inset-0 bg-gray-200 dark:bg-neutral-800 animate-pulse rounded-md; }
+.img-loaded { @apply transition duration-500 ease-out; filter: blur(0); opacity: 1; }
+
+/* Scroll-snap pra carrosséis */
+.snap-x-mandatory { scroll-snap-type: x mandatory; }
+.snap-center { scroll-snap-align: center; }
+
+/* Acessibilidade: reduzir movimento */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
 }
