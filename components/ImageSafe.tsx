@@ -1,33 +1,16 @@
-"use client";
-
+// components/ImageSafe.tsx
 import Image, { ImageProps } from "next/image";
-import { useState } from "react";
 
 type Props = Omit<ImageProps, "src" | "alt"> & {
-  src?: string;
+  src?: string | null;
   alt?: string;
-  fallbackSrc?: string;
+  fallbackClassName?: string;
 };
 
-export default function ImageSafe({
-  src,
-  alt = "",
-  fallbackSrc = "/polus-logo.svg",
-  ...rest
-}: Props) {
-  const [error, setError] = useState(false);
-  const actual = !src || error ? fallbackSrc : src;
-
-  // se por algum motivo ainda estiver vazio, não renderiza
-  if (!actual) return null;
-
-  return (
-    <Image
-      {...rest}
-      src={actual}
-      alt={alt}
-      onError={() => setError(true)}
-      sizes={rest.sizes ?? "(min-width:768px) 33vw, 100vw"}
-    />
-  );
+export default function ImageSafe({ src, alt, fallbackClassName, ...rest }: Props) {
+  if (!src) {
+    // Não renderiza nada se não houver src (evita warnings de src="")
+    return <div className={fallbackClassName} aria-hidden />;
+  }
+  return <Image src={src} alt={alt ?? ""} {...rest} />;
 }

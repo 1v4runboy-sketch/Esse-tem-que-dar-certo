@@ -1,43 +1,30 @@
+// components/Sidebar.tsx
 "use client";
 
-import Image from "next/image";
-import { useState } from "react";
+import { useSidebar } from "./SidebarProvider";
 import Link from "next/link";
 
 export default function Sidebar() {
-  const [open, setOpen] = useState(false);
+  const { open } = useSidebar();
 
   return (
-    <>
-      <button
-        aria-label="Abrir menu"
-        onClick={() => setOpen((v) => !v)}
-        className="fixed left-4 top-4 z-50 rounded-full border bg-card p-2 shadow hover:shadow-md"
-      >
-        <Image src="/loading-logo.png" alt="Menu" width={32} height={32} />
-      </button>
-
-      <aside
-        className={`fixed z-40 top-0 left-0 h-full w-72 border-r bg-background transition-transform ${
-          open ? "translate-x-0" : "-translate-x-full"
-        }`}
-      >
-        <div className="p-4 flex items-center justify-between border-b">
-          <span className="font-semibold">Menu</span>
-          <button
-            aria-label="Fechar menu"
-            onClick={() => setOpen(false)}
-            className="rounded-md border px-2 py-1 text-sm"
-          >
-            Fechar
-          </button>
-        </div>
-        <nav className="p-4 space-y-2 text-sm">
-          <Link href="/" className="block hover:underline">Início</Link>
-          <Link href="/produtos" className="block hover:underline">Produtos</Link>
-          <Link href="/contato" className="block hover:underline">Contato</Link>
-        </nav>
-      </aside>
-    </>
+    <aside
+      aria-hidden={!open}
+      className={[
+        "fixed top-16 left-0 z-50 h-[calc(100vh-4rem)] w-72 md:w-80",
+        "bg-black text-white border-r transition-transform duration-300",
+        open ? "translate-x-0" : "-translate-x-full",
+      ].join(" ")}
+    >
+      <nav className="p-4 space-y-2 text-sm">
+        <Link className="block hover:underline" href="/">Início</Link>
+        <Link className="block hover:underline" href="/avaliacoes">Avaliações</Link>
+        <Link className="block hover:underline" href="/contato">Contato</Link>
+        {/* adicione outras seções conforme crescer o catálogo */}
+      </nav>
+      <div className="p-4 text-xs text-white/60">
+        Clique na logo para fechar o menu.
+      </div>
+    </aside>
   );
 }
